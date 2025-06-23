@@ -1,4 +1,4 @@
 pytest
 pytest-cov
 coverage>=7
-tox
+tox>=4
