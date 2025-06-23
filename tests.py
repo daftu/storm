@@ -258,7 +258,8 @@ class StormCliTestCase(unittest.TestCase):
             self.assertIn(b"alphauser", content)
 
         out, err, rc = self.run_cmd("edit worker  {0}".format(self.config_arg))
-
+        self.assertNotEqual(rc, 0)
+        self.assertIn(b"error", err)
 
     def test_update_invalid_regex(self):
 
