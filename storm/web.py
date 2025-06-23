@@ -56,7 +56,7 @@ def add():
         storm_.add_entry(name, host, user, port, id_file)
         return response(status=201)
     except ValueError as exc:
-        return jsonify(message=exc.message)
+        return jsonify(message=str(exc))
     except (KeyError, TypeError):
         return response(status=400)
 
@@ -78,7 +78,7 @@ def edit():
         storm_.edit_entry(name, host, user, port, id_file)
         return response()
     except ValueError as exc:
-        return jsonify(message=exc.message), 404
+        return jsonify(message=str(exc)), 404
     except (KeyError, TypeError):
         return response(status=400)
 
@@ -92,7 +92,7 @@ def delete():
         storm_.delete_entry(name)
         return response()
     except ValueError as exc:
-        return jsonify(message=exc.message), 404
+        return jsonify(message=str(exc)), 404
     except (TypeError, ValueError):
         return response(status=400)
 
