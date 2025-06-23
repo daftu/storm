@@ -5,6 +5,12 @@ from __future__ import print_function
 from operator import itemgetter
 import re
 from shutil import copyfile
+import warnings
+try:
+    from cryptography.utils import CryptographyDeprecationWarning
+    warnings.filterwarnings("ignore", category=CryptographyDeprecationWarning)
+except Exception:
+    pass
 
 from .parsers.ssh_config_parser import ConfigParser
 from .defaults import get_default

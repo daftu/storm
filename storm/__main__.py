@@ -15,6 +15,10 @@ from storm.utils import (get_formatted_message, colored)
 from storm.kommandr import *
 from storm.defaults import get_default
 from storm import __version__
+try:
+    from collections.abc import Sequence
+except ImportError:  # Python 2 fallback
+    from collections import Sequence
 
 import sys
 
@@ -224,7 +228,7 @@ def list(config=None):
                                 result += " {0}".format(custom_options)
                             extra = True
 
-                            if isinstance(value, collections.Sequence):
+                            if isinstance(value, Sequence):
                                 if isinstance(value, builtins.list):
                                     value = ",".join(value)
                                     
