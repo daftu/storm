@@ -298,7 +298,7 @@ def delete_all(config=None):
 @command('backup')
 def backup(target_file, config=None):
     """
-    Backups the main ssh configuration into target file.
+    Backs up the main SSH configuration to the target file.
     """
     storm_ = get_storm_instance(config)
     try:
