@@ -146,7 +146,10 @@ class prog(object):
         subparser = self.subparsers.add_parser(name or func.__name__,
                                                aliases=aliases,
                                                help=func_help)
-        spec = inspect.getargspec(func)
+        try:
+            spec = inspect.getfullargspec(func)
+        except AttributeError:
+            spec = inspect.getargspec(func)
         opts = reversed(list(izip_longest(reversed(spec.args or []),
                                           reversed(spec.defaults or []),
                                           fillvalue=self._POSITIONAL())))
