@@ -13,7 +13,7 @@ or if you like 90s:
 
     $ [sudo] easy_install stormssh
 
-or download and add storm directory to the your `$PATH`. E.g.
+or download and add storm directory to your `$PATH`. E.g.
 
 .. code-block:: bash
 
