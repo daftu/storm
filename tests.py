@@ -286,7 +286,7 @@ class StormCliTestCase(unittest.TestCase):
 
         out, err, rc = self.run_cmd("search aws {0}".format(self.config_arg))
 
-        self.assertTrue(out.startswith(b'Listing results for aws:'))
+        self.assertTrue(out.startswith(b' Listing results for aws:'))
         self.assertIn(b'aws.apache', out)
         self.assertEqual(rc, 0)
 

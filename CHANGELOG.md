@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.8.2] - 2025-06-24
+- Added colored output to ``storm search`` results
+- Merged wildcard SSH config entries in search results
+
 ## [0.8.1] - 2025-06-24
 - Checked for deprecated dependencies and updated to maintained versions
 - Cleaned up setup configuration and pinned compatible library versions
