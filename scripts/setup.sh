@@ -1,15 +1,16 @@
 #!/bin/bash
 
 # setup pip
-apt-get update 
-apt-get install -y python-dev
-apt-get install -y python-pip
+apt-get update
+apt-get install -y python3-dev
+apt-get install -y python3-pip
 
 # install storm ssh dependencies
-pip install -e /vagrant
+pip3 install -e /vagrant
 
 # setup pth file
-echo /vagrant > /usr/local/lib/python2.7/dist-packages/storm.pth
+SITE_PACKAGES=$(python3 -c 'import site; print(site.getsitepackages()[0])')
+echo /vagrant > "$SITE_PACKAGES"/storm.pth
 
 # add ssh entries
 storm add google google.com

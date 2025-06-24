@@ -23,11 +23,11 @@ Summary:        Management commands to ssh config files
 Url:            http://github.com/emre/storm
 Group:          Development/Languages/Python
 Source:         https://pypi.python.org/packages/source/s/stormssh/stormssh-%{version}.tar.gz
-BuildRequires:  python-devel
-BuildRequires:  python-setuptools
+BuildRequires:  python3-devel
+BuildRequires:  python3-setuptools
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 %if 0%{?suse_version} && 0%{?suse_version} <= 1110
-%{!?python_sitelib: %global python_sitelib %(python -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")}
+%{!?python_sitelib: %global python_sitelib %(python3 -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())")}
 %else
 BuildArch:      noarch
 %endif
@@ -39,10 +39,10 @@ Manage your SSH like a boss
 %setup -q -n stormssh-%{version}
 
 %build
-python setup.py build
+python3 setup.py build
 
 %install
-python setup.py install --prefix=%{_prefix} --root=%{buildroot}
+python3 setup.py install --prefix=%{_prefix} --root=%{buildroot}
 
 %files
 %defattr(-,root,root,-)

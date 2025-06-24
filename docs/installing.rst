@@ -5,7 +5,7 @@ installing via pip:
 
 .. code-block:: bash
 
-    $ [sudo] pip install stormssh
+    $ [sudo] pip3 install stormssh
 
 or if you like 90s:
 
