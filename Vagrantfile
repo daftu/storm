@@ -5,7 +5,9 @@
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-  config.vm.box = "hashicorp/precise32"
+  # Use a recent Ubuntu LTS image
+  config.vm.box = "ubuntu/focal64"
   
+  # Provision using the Python 3 setup script
   config.vm.provision "shell", path: "scripts/setup.sh"
 end
