@@ -488,6 +488,29 @@ class StormTests(unittest.TestCase):
                 self.assertEqual(item.get("options").get("stricthostkeychecking"), 'yes')
                 self.assertEqual(item.get("options").get("userknownhostsfile"), '/home/emre/foo')
 
+    def test_search_host_merge_wildcard(self):
+        config = """Host *
+    User default
+    Port 22
+
+Host kapef.*
+    User dmos
+
+Host kapef.prod
+    HostName prod.example.com
+"""
+        path = '/tmp/ssh_config_merge'
+        with open(path, 'w+') as f:
+            f.write(config)
+
+        storm = Storm(path)
+        results = storm.search_host('kapef')
+
+        self.assertEqual(len(results), 1)
+        self.assertIn('kapef.prod', results[0])
+        self.assertIn('dmos@prod.example.com:22', results[0])
+        self.assertNotIn('kapef.*', results[0])
+
     def tearDown(self):
         os.unlink('/tmp/ssh_config')
 
