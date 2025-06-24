@@ -9,10 +9,12 @@ try:
 except ImportError:
     import builtins
 
+import re
+import sys
+
 from storm import Storm
 from storm.parsers.ssh_uri_parser import parse
 from storm.utils import (get_formatted_message, colored)
-import re
 from storm.kommandr import *
 from storm.defaults import get_default
 from storm import __version__
@@ -20,8 +22,6 @@ try:
     from collections.abc import Sequence
 except ImportError:  # Python 2 fallback
     from collections import Sequence
-
-import sys
 
 def get_storm_instance(config_file=None):
     return Storm(config_file)

@@ -1,5 +1,8 @@
 # Changelog
 
+## [0.8.2] - 2025-06-24
+- Colorize `storm search` output with green hostnames, magenta usernames, and cyan ports
+
 ## [0.8.0] - 2025-06-24
 - Merge pull request #15 from daftu/codex/replace-base-box-with-supported-ubuntu-release
 - Merge pull request #14 from daftu/codex/update-setup.sh-for-python-3-and-vagrantfile-compatibility
