@@ -246,3 +246,25 @@ class ConfigParser(object):
             last_index = max(indexes)
 
         return last_index
+
+    def get_effective_options(self, host):
+        """Return merged ssh options for ``host`` applying wildcards."""
+        from fnmatch import fnmatch
+
+        options = dict(self.defaults)
+        host_options = {}
+
+        for entry in self.config_data:
+            if entry.get("type") != "entry":
+                continue
+            hosts = entry.get("host").split()
+            if host in hosts:
+                host_options.update(entry.get("options"))
+                continue
+            for pattern in hosts:
+                if ("*" in pattern or "?" in pattern) and fnmatch(host, pattern):
+                    options.update(entry.get("options"))
+                    break
+
+        options.update(host_options)
+        return options

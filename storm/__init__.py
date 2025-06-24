@@ -111,21 +111,81 @@ class Storm(object):
         return True
 
     def search_host(self, search_string):
+        import fnmatch
+
         results = self.ssh_config.search_host(search_string)
         formatted_results = []
+        added_hosts = set()
+
+        def is_wildcard(name):
+            return "*" in name or "?" in name
+
+        # handle regular hosts first
         for host_entry in results:
-            formatted_results.append("    {0} -> {1}@{2}:{3}\n".format(
-                host_entry.get("host"),
-                host_entry.get("options").get(
-                    "user", get_default("user", self.defaults)
-                ),
-                host_entry.get("options").get(
-                    "hostname", "[hostname_not_specified]"
-                ),
-                host_entry.get("options").get(
-                    "port", get_default("port", self.defaults)
-                ),
-            ))
+            hosts = host_entry.get("host").split()
+            if any(is_wildcard(h) for h in hosts):
+                continue
+            for host in hosts:
+                if host in added_hosts:
+                    continue
+                options = self.ssh_config.get_effective_options(host)
+                formatted_results.append(
+                    "    {0} -> {1}@{2}:{3}\n".format(
+                        host,
+                        options.get(
+                            "user", get_default("user", self.defaults)
+                        ),
+                        options.get(
+                            "hostname", "[hostname_not_specified]"
+                        ),
+                        options.get(
+                            "port", get_default("port", self.defaults)
+                        ),
+                    )
+                )
+                added_hosts.add(host)
+
+        # handle wildcard hosts that have no specific entry
+        for host_entry in results:
+            hosts = host_entry.get("host").split()
+            if not any(is_wildcard(h) for h in hosts):
+                continue
+            for pattern in hosts:
+                if pattern in added_hosts:
+                    continue
+
+                matched = False
+                for item in self.ssh_config.config_data:
+                    if item.get("type") != "entry":
+                        continue
+                    for h in item.get("host").split():
+                        if not is_wildcard(h) and fnmatch.fnmatch(h, pattern):
+                            matched = True
+                            break
+                    if matched:
+                        break
+
+                if matched:
+                    continue
+
+                options = dict(self.defaults)
+                options.update(host_entry.get("options"))
+
+                formatted_results.append(
+                    "    {0} -> {1}@{2}:{3}\n".format(
+                        pattern,
+                        options.get(
+                            "user", get_default("user", self.defaults)
+                        ),
+                        options.get(
+                            "hostname", "[hostname_not_specified]"
+                        ),
+                        options.get(
+                            "port", get_default("port", self.defaults)
+                        ),
+                    )
+                )
+                added_hosts.add(pattern)
 
         return formatted_results
 
