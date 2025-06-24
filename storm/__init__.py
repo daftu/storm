@@ -16,7 +16,7 @@ from .parsers.ssh_config_parser import ConfigParser
 from .defaults import get_default
 
 
-__version__ = '0.7.1'
+__version__ = '0.8.0'
 
 ERRORS = {
     "already_in": "{0} is already in your sshconfig. "
