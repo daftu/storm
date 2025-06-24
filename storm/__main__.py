@@ -12,6 +12,7 @@ except ImportError:
 from storm import Storm
 from storm.parsers.ssh_uri_parser import parse
 from storm.utils import (get_formatted_message, colored)
+import re
 from storm.kommandr import *
 from storm.defaults import get_default
 from storm import __version__
@@ -274,9 +275,36 @@ def search(search_text, config=None):
             print ('no results found.')
 
         if len(results) > 0:
-            message = 'Listing results for {0}:\n'.format(search_text)
-            message += "".join(results)
-            print(message)
+            message = colored(
+                'Listing results for {0}:'.format(search_text),
+                'white',
+                attrs=["bold", ]
+            ) + "\n\n"
+
+            for res in results:
+                res = res.strip()
+                if '->' in res:
+                    alias, info = [x.strip() for x in res.split('->', 1)]
+                    user_host_port = info
+                    m = re.match(r'([^@]+)@([^:]+):(.*)', user_host_port)
+                    if m:
+                        user, hostname, port = m.groups()
+                        formatted = "    {0} -> {1}@{2}:{3}\n".format(
+                            colored(alias, 'green', attrs=["bold", ]),
+                            colored(user, 'magenta'),
+                            hostname,
+                            colored(port, 'cyan')
+                        )
+                    else:
+                        formatted = "    {0} -> {1}\n".format(
+                            colored(alias, 'green', attrs=["bold", ]),
+                            info,
+                        )
+                else:
+                    formatted = res + "\n"
+                message += formatted
+
+            print(get_formatted_message(message, ""))
     except Exception as error:
         print(get_formatted_message(str(error), 'error'), file=sys.stderr)
         sys.exit(1)
