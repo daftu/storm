@@ -9,9 +9,10 @@ source=('git://github.com/emre/storm.git')
 sha1sums=('SKIP')
 license=('MIT')
 makedepends=('git')
-depends=('python-paramiko' 'python-termcolor' 'python-flask' 'python-six'
-        'python-crypto' 'python-ecdsa' 'python-werkzeug' 'python-jinja' 
-        'python-itsdangerous' 'python-markupsafe')
+depends=('python-paramiko>=3' 'python-termcolor' 'python-flask>=2.0' 'python-six'
+        'python-bcrypt' 'python-cryptography' 'python-pynacl' 'python-ecdsa'
+        'python-werkzeug' 'python-jinja' 'python-itsdangerous'
+        'python-markupsafe')
 
 # See https://wiki.archlinux.org/index.php/VCS_PKGBUILD_Guidelines#Git
 pkgver() {
