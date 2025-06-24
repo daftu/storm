@@ -1,14 +1,14 @@
 #!/bin/bash
+set -e
 
-# setup pip
+# install Python 3 and pip
 apt-get update
-apt-get install -y python3-dev
-apt-get install -y python3-pip
+apt-get install -y python3 python3-dev python3-pip
 
 # install storm ssh dependencies
-pip3 install -e /vagrant
+python3 -m pip install -e /vagrant
 
-# setup pth file
+# setup pth file using the Python 3 site-packages path
 SITE_PACKAGES=$(python3 -c 'import site; print(site.getsitepackages()[0])')
 echo /vagrant > "$SITE_PACKAGES"/storm.pth
 
