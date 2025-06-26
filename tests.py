@@ -4,6 +4,7 @@ import getpass
 import os
 import shlex
 import subprocess
+import sys
 
 try:
     import unittest2 as unittest
@@ -81,7 +82,7 @@ class TestStormCli(unittest.TestCase):
 
     def run_cmd(self, cmd):
 
-        cmd = 'storm %s' % cmd
+        cmd = f"{sys.executable} -m storm {cmd}"
         cmd = shlex.split(cmd.encode('utf-8') if six.PY2 else cmd)
         _env = os.environ
         _env["TESTMODE"] = "1"
