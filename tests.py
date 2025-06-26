@@ -70,7 +70,7 @@ FAKE_SSH_CONFIG_FOR_CLI_TESTS = """
 """
 
 
-class StormCliTestCase(unittest.TestCase):
+class TestStormCli(unittest.TestCase):
 
     def setUp(self):
         self.config_file = '/tmp/ssh_config_cli_tests'
@@ -314,7 +314,7 @@ class StormCliTestCase(unittest.TestCase):
         os.unlink('/tmp/ssh_config_cli_tests')
 
 
-class StormTests(unittest.TestCase):
+class TestStorm(unittest.TestCase):
 
     def setUp(self):
         fake_ssh_config = """Host *
